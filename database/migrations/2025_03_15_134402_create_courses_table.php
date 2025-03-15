@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->string('nsme');
+            $table->string('slug');
+            $table->string('thumbanil');
+
+            $table->text('about');
+
+            $table->boolean('is_popular');
+            $table->foreignId('category_id')->contrained()->cascadeOnDeleyte();
+
+            $table->softDelete();
             $table->timestamps();
         });
     }
