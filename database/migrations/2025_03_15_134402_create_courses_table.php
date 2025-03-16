@@ -20,9 +20,9 @@ return new class extends Migration
             $table->text('about');
 
             $table->boolean('is_popular');
-            $table->foreignId('category_id')->contrained()->cascadeOnDeleyte();
+            $table->foreignId('category_id')->contrained()->cascadeOnDelete();
 
-            $table->softDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
