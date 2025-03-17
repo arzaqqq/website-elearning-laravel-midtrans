@@ -10,7 +10,10 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
@@ -39,7 +42,7 @@ class UserResource extends Resource
                      ->maxLength(255)
                      ->required()
                      ->helperText('Minimal 8 karakter'),
-                Select::make('ocuupation')
+                Select::make('occupation')
                      ->options([
                       'Developer' => 'Developer',
                       'Desaigner'=> 'Desaigner',
@@ -62,9 +65,20 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                //
-            ])
+        ->columns([
+            ImageColumn::make('photo')
+                ->circular(),
+            TextColumn::make('name')
+                ->sortable(),
+            TextColumn::make('occupation')
+            ->sortable(),
+            TextColumn::make('email')
+            ->sortable(),
+            TextColumn::make('roles.name')
+            ->sortable(),
+
+        ])
+
             ->filters([
                 // Tables\Filters\TrashedFilter::make(),
             ])
@@ -79,6 +93,7 @@ class UserResource extends Resource
                 ]),
             ]);
     }
+
 
     public static function getRelations(): array
     {
