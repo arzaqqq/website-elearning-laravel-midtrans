@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use Dom\Text;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
 {
@@ -23,7 +27,35 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                    ->maxLength(255)
+                    ->required(),
+                TextInput::make('email')
+                     ->maxLength(255)
+                     ->required(),
+                TextInput::make('password')
+                     ->password()
+                     ->minLength(8)
+                     ->maxLength(255)
+                     ->required()
+                     ->helperText('Minimal 8 karakter'),
+                Select::make('ocuupation')
+                     ->options([
+                      'Developer' => 'Developer',
+                      'Desaigner'=> 'Desaigner',
+                      'Project Manager' => 'Project Manager'
+                    ])
+                     ->required(),
+                Select::make('roles')
+                ->label('Role')
+                ->relationship('roles', 'name')
+                ->required(),
+
+                FileUpload::make('photo')
+                ->required()
+                ->image(),
+
+
             ]);
     }
 
@@ -34,7 +66,7 @@ class UserResource extends Resource
                 //
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                // Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
