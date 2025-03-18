@@ -68,7 +68,11 @@ class CourseResource extends Resource
                         ->Relationship('category', 'name')
                         ->searchable()
                         ->preload()
-                        ->required(),
+                        ->required() ->createOptionForm([
+                            TextInput::make('name')
+                                ->required()
+                                ->label('Category Name'),
+                        ]),
 
                         ]),
 
