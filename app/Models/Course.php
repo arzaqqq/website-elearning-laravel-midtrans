@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Course extends Model
 {
+
+    
     protected $fillable = [
         'name',
         'slug',
