@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->contrained()->cascadeOnDelete();
 
-            $table->string('nsme');
+            $table->string('name');
 
             $table->string('slug');
-            $table->string('thumbanil');
+            $table->string('thumbnail');
 
             $table->text('about');
             $table->boolean('is_popular');

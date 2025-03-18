@@ -65,7 +65,7 @@ class CourseResource extends Resource
                         ->required(),
 
                         Select::make('category_id')
-                        ->Relationship('category', ' name')
+                        ->Relationship('category', 'name')
                         ->searchable()
                         ->preload()
                         ->required(),
