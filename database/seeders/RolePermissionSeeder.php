@@ -29,19 +29,19 @@ class RolePermissionSeeder extends Seeder
 
         $user = User::create([
             'name' => 'Admin Seeder',
-            'email' => 'admin@example.com',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
 
          $student = User::create([
             'name' => 'Student Seeder',
-            'email' => 'student@example.com',
+            'email' => 'student@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
 
          $mentor = User::create([
             'name' => 'mentor Seeder',
-            'email' => 'mentor@example.com',
+            'email' => 'mentor@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
 
