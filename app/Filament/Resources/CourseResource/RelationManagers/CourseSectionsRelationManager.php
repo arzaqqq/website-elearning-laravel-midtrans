@@ -13,7 +13,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 
 class CourseSectionsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'courseSections';
+    protected static string $relationship = 'courseSection';
 
     public function form(Form $form): Form
     {
@@ -24,7 +24,8 @@ class CourseSectionsRelationManager extends RelationManager
                     ->maxLength(255),
                 TextInput::make('position')
                 ->required()
-                ->numeric
+                ->numeric()
+                ->prefix('position'),
             ]);
     }
 
