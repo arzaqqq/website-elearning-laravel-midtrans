@@ -22,6 +22,7 @@ use App\Filament\Resources\CourseResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Factories\Relationship;
 use App\Filament\Resources\CourseResource\RelationManagers;
+use App\Filament\Resources\CourseResource\RelationManagers\CourseSectionsRelationManager;
 
 class CourseResource extends Resource
 {
@@ -119,7 +120,7 @@ class CourseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CourseSectionsRelationManager::class,
         ];
     }
 
