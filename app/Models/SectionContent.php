@@ -12,7 +12,7 @@ class SectionContent extends Model
 
     protected $fillable = [
         'name',
-        'course_section',
+        'course_section_id',
         'content',
     ];
 
