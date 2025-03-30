@@ -66,14 +66,16 @@ class TransactionResource extends Resource
                                                 $set('duration', 0);
                                             }
                                         }),
+                                        TextInput::make('duration')
+                                        ->required()
+                                        ->numeric()
+                                        ->readonly()
+                                        ->prefix('Months'),
                                 ]),
 
                             Grid::make(2)
                                 ->schema([
-                                    TextInput::make('duration')
-                                        ->numeric()
-                                        ->readonly()
-                                        ->prefix('Months'),
+
 
                                     TextInput::make('sub_total_amount')
                                         ->required()
