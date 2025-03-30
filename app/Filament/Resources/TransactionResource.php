@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Pricing;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Tables\Filters\TrashedFilter;
@@ -68,12 +70,13 @@ class TransactionResource extends Resource
                                         }),
                                         TextInput::make('duration')
                                         ->required()
+                                        ->columnspanfull()
                                         ->numeric()
                                         ->readonly()
                                         ->prefix('Months'),
                                 ]),
 
-                            Grid::make(2)
+                            Grid::make(3)
                                 ->schema([
 
 
@@ -95,9 +98,30 @@ class TransactionResource extends Resource
                                         ->prefix('IDR')
                                         ->readOnly(),
                                 ]),
+
+
+                                Grid::make(2)
+                                ->schema([
+                                    DatePicker::make('started_at')
+                    ->live() // Pastikan live update
+                    ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                        $duration = $get('duration'); // Ambil nilai duration
+                        if ($state && $duration) {
+                            $endedAt = Carbon::parse($state)->addMonths($duration);
+                            $set('ended_at', $endedAt->format('Y-m-d')); // Set ended_at secara otomatis
+                        }
+                    })
+                    ->required(),
+
+                                    DatePicker::make('ended_at')
+                                        ->readOnly()
+                                        ->required(),
+                                ])
+
                         ]),
                 ])
                 ->columnSpanFull()
+                ->columns(1)
                 ->skippable(),
             ]);
     }
