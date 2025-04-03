@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Carbon\Carbon;
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Pricing;
 use Filament\Forms\Form;
@@ -18,8 +19,10 @@ use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Forms\Components\ToggleButtons;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TransactionResource\Pages;
+use Illuminate\Database\Eloquent\Factories\Relationship;
 use App\Filament\Resources\TransactionResource\RelationManagers;
 
 class TransactionResource extends Resource
@@ -119,6 +122,67 @@ class TransactionResource extends Resource
                                 ])
 
                         ]),
+
+
+                        Step::make('customer Information')
+                        ->schema([
+                            Forms\Components\Select::make('user_id')
+                            ->relationship('student', 'email')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->live()
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $user = User::find($state);
+                                if ($user) {
+                                    $set('name', $user->name);
+                                    $set('email', $user->email);
+                                }
+                            })
+                            ->afterStateHydrated(function (callable $set, $state) {
+                                if ($state) {
+                                    $user = User::find($state);
+                                    if ($user) {
+                                        $set('name', $user->name);
+                                        $set('email', $user->email);
+                                    }
+                                }
+                            }),
+
+                            TextInput::make('name')
+                            ->required()
+                            ->readonly()
+                            ->maxLength(255),
+
+                            TextInput::make('email')
+                            ->required()
+                            ->readonly()
+
+                            ->maxLength(255),
+                        ]),
+
+                        Forms\Components\Wizard\Step::make('Payment Information')
+                            ->schema([
+                                ToggleButtons::make('is_paid')
+                                    ->label('Apakah sudah membayar?')
+                                    ->boolean()
+                                    ->grouped()
+                                    ->icons([
+                                        'true' => 'heroicon-o-pencil',
+                                        'false' => 'heroicon-o-clock',
+                                    ])
+                                    ->required(),
+
+                                Forms\Components\Select::make('payment_type')
+                                    ->options([
+                                        'Midtrans' => 'Midtrans',
+                                        'Manual' => 'Manual',
+                                    ])
+                                    ->required(),
+
+                                Forms\Components\FileUpload::make('proof')
+                                    ->image(),
+                            ]),
                 ])
                 ->columnSpanFull()
                 ->columns(1)
