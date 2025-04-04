@@ -14,7 +14,11 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Wizard\Step;
@@ -30,6 +34,8 @@ class TransactionResource extends Resource
     protected static ?string $model = Transaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Customer';
+
 
     public static function form(Form $form): Form
     {
@@ -193,20 +199,67 @@ class TransactionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([])
+            ->columns([
+                ImageColumn::make('student.photo')
+                ->circular(),
+
+                TextColumn::make('student.name')
+                ->searchable(),
+
+                TextColumn::make('booking_trx_id')
+                ->searchable(),
+
+                TextColumn::make('pricing.name'),
+
+                TextColumn::make('created_at'),
+
+                IconColumn::make('is_paid')
+                    ->boolean()
+                    ->trueColor('success')
+                    ->falsecolor('danger')
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->label('Terverifikasi')
+
+            ])
             ->filters([
                 TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                ]),
-            ]);
+                Tables\Actions\Action::make('approve')
+                ->label('Approve')
+                ->action(function (Transaction $record) {
+                    $record->update(['is_paid' => true]);
+
+                    // Send notification
+                    Notification::make()
+                        ->title('Order Approved')
+                        ->success()
+                        ->body('The order has been successfully approved.')
+                        ->send();
+
+                    // Additional actions can be added here:
+                    // - Send email
+                    // - Send SMS
+                    // - Trigger other events
+                })
+                ->color('success')
+                ->requiresConfirmation()
+                ->modalHeading('Approve Transaction')
+                ->modalDescription('Are you sure you want to approve this transaction?')
+                ->modalSubmitActionLabel('Yes, approve')
+                ->visible(fn (Transaction $record): bool => !$record->is_paid),
+                        ])
+                        ->bulkActions([
+                            Tables\Actions\BulkActionGroup::make([
+                                Tables\Actions\DeleteBulkAction::make(),
+                                Tables\Actions\ForceDeleteBulkAction::make(),
+                                Tables\Actions\RestoreBulkAction::make(),
+
+
+                            ]),
+                        ]);
     }
 
     public static function getRelations(): array
