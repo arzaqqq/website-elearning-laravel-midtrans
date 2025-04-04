@@ -9,12 +9,14 @@ class Transaction extends Model
 {
     use SoftDeletes;
 
-    protected $fiilable = [
+    protected $fillable = [
+        'pricing_id',
         'booking_trx_id',
         'user_id',
         'product_id',
         'sub_total_amount',
         'total_tax_amount',
+        'grand_total_amount',
         'is_paid',
         'payment_type',
         'proof',
@@ -31,7 +33,7 @@ class Transaction extends Model
 
     public function pricing()
     {
-        return $this->belongsTo(Pricing::class, 'pricingh_id');
+        return $this->belongsTo(Pricing::class, 'pricing_id');
     }
 
 
@@ -41,7 +43,7 @@ class Transaction extends Model
     }
 
 
-    public function isActive(): bool  
+    public function isActive(): bool
     {
         return $this->is_paid && $this->ended_at->isFuture();
     }
