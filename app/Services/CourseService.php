@@ -45,7 +45,31 @@ class CourseService
         $course->load(['courseSections.sectionContents']);
         $currentSection = $course->courseSections->find($contentSectionId);
         $currentContent = $currentSection ? $currentSection->sectionContents->find($sectionContentId) : null;
+
+        // EXITING TEXT, CULTURE
+        $nextContent = null;
+
+        if ($currentContent && $currentSection) {
+            $nextContent = $currentSection->sectionContents
+                ->where('id', '>', $currentContent->id)
+                ->sortBy('id')
+                ->first();
+        }
+
+        if (!$nextContent && $currentSection) {
+            $nextSection = $course->courseSections
+                ->where('id', '>', $currentSection->id)
+                ->sortBy('id')
+                ->first();
+
+            if ($nextSection) {
+                $nextContent = $nextSection->sectionContents
+                    ->sortBy('id')
+                    ->first();
+            }
+        }
     }
+
 }
 
 
