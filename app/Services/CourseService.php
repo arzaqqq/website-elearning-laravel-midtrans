@@ -39,6 +39,13 @@ class CourseService
             'firstContentId' => $firstContent?->id,
         ];
     }
+
+    public function getLearningData(Course $course, $contentSectionId, $sectionContentId)
+    {
+        $course->load(['courseSections.sectionContents']);
+        $currentSection = $course->courseSections->find($contentSectionId);
+        $currentContent = $currentSection ? $currentSection->sectionContents->find($sectionContentId) : null;
+    }
 }
 
 
