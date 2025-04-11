@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Pricing;
 use App\Helpers\TransactionHelper;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\PricingRepositoryInterface;
 use App\Repositories\TransactionRepositoryInterface;
@@ -66,4 +68,39 @@ class PaymentService
 
          return $this->midtransService->createSnapToken($params);
     }
+
+        public function handlePaymentNotification()
+    {
+        $notification = $this->midtransService->handleNotification();
+
+        if (in_array($notification['transaction_status'], ['capture', 'settlement'])) {
+            $pricing = Pricing::findOrFail($notification['custom_field2']);
+            // $pricing = $this->pricingRepository->findById($notification['custom_field2']);
+            $this->createTransaction($notification, $pricing);
+        }
+
+        return $notification['transaction_status'];
+    }
+    protected function createTransaction(array $notification, Pricing $pricing): void
+{
+    $startedAt = now();
+    $endedAt = $startedAt->copy()->addMonths($pricing->duration);
+
+    $transactionData = [
+        'user_id' => $notification['custom_field1'],
+        'pricing_id' => $notification['custom_field2'],
+        'sub_total_amount' => $pricing->price,
+        'total_tax_amount' => $pricing->price * 0.11,
+        'grand_total_amount' => $notification['gross_amount'],
+        'payment_type' => 'Midtrans',
+        'is_paid' => true,
+        'booking_trx_id' => $notification['order_id'],
+        'started_at' => $startedAt,
+        'ended_at' => $endedAt,
+    ];
+
+    $this->transactionRepository->create($transactionData);
+
+    Log::info('Transaction successfully created: ' . $notification['order_id']);
+}
 }
