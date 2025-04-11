@@ -5,15 +5,27 @@ namespace App\Service;
 use APP\Models\Pricing;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+use App\Repository\TransactionRepository;
+use App\Repositories\PricingRepositoryInterface;
+use App\Repository\TransactionRepositoryInterface;
 
 class TransactionService
 {
+
+    protected $pricingRepository;
+    protected $transactionRepository;
+
+    public function __construct(
+        PricingRepositoryInterface $pricingRepository,
+        TransactionRepositoryInterface $transactionRepository
+    ) {
+        $this->pricingRepository = $pricingRepository;
+        $this->transactionRepository = $transactionRepository;
+    }
     public function prepareCheckout(Pricing $pricing)
     {
         $user = Auth::user();
-
-        // Check if user is already subscribed
-        // $alreadySubscribed = $pricing->isSubscribedByUser($user->id);
+        $alreadySubscribed = $pricing->isSubscribedByUser($user->id);
 
         // Calculate amounts
         $taxRate = 0.11;
@@ -43,7 +55,7 @@ class TransactionService
     public function getRecentPricing()
     {
         $pricingId = session()->get('pricing_id');
-        return Pricing::find($pricingId);
+        return $this->pricingRepository->findById($pricingId);
     }
 
 
@@ -55,9 +67,11 @@ class TransactionService
             return collect();
         }
 
-        return Transaction::with('pricing')
-        ->where('user_id', $user->id)
-        ->ordering('created_at', 'desc')
-        ->get();
+        return $this->transactionRepository->getUserTransactions($user->id);
+
+        // return Transaction::with('pricing')
+        // ->where('user_id', $user->id)
+        // ->ordering('created_at', 'desc')
+        // ->get();
     }
 }

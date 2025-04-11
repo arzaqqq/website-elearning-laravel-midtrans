@@ -6,7 +6,9 @@ use App\Models\Transaction;
 use App\Repository\PricingRepository;
 use App\Observers\TransactionObserver;
 use Illuminate\Support\ServiceProvider;
+use App\Repository\TransactionRepository;
 use App\Repositories\PricingRepositoryInterface;
+use App\Repository\TransactionRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(PricingRepositoryInterface::class,PricingRepository::class);
+        $this->app->singleton(TransactionRepositoryInterface::class,TransactionRepository::class);
+
     }
 
     /**
