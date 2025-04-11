@@ -68,6 +68,14 @@ class CourseService
                     ->first();
             }
         }
+
+        return [
+            'course' => $course,
+            'currentSection' => $currentSection,
+            'currentContent' => $currentContent,
+            'nextContent' => $nextContent,
+            'jsFinished' => !$nextContent,
+        ];
     }
 
 }
