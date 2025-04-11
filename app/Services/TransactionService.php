@@ -5,9 +5,9 @@ namespace App\Service;
 use APP\Models\Pricing;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-use App\Repository\TransactionRepository;
+use App\Repositories\TransactionRepository;
 use App\Repositories\PricingRepositoryInterface;
-use App\Repository\TransactionRepositoryInterface;
+use App\Repositories\TransactionRepositoryInterface;
 
 class TransactionService
 {

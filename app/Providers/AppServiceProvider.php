@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Transaction;
-use App\Repository\PricingRepository;
 use App\Observers\TransactionObserver;
+use App\Repositories\PricingRepository;
 use Illuminate\Support\ServiceProvider;
-use App\Repository\TransactionRepository;
+use App\Repositories\TransactionRepository;
 use App\Repositories\PricingRepositoryInterface;
-use App\Repository\TransactionRepositoryInterface;
+use App\Repositories\TransactionRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
