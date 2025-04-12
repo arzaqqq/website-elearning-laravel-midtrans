@@ -1,12 +1,20 @@
-<?PHP
+<?php
 
-namespace APP\Services;
+namespace App\Services;
 
 use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\CourseRepositoryInterface;
 
 class CourseService
 {
+    protected $courseRepository;
+
+    public function __construct(CourseRepositoryInterface $courseRepository)
+    {
+        $this->courseRepository = $courseRepository;
+    }
+
     public function enrollUser(Course $course)
     {
         $user = Auth::user();
@@ -77,6 +85,20 @@ class CourseService
             'jsFinished' => !$nextContent,
         ];
     }
+
+
+    public function searchCourses(string $keyword)
+    {
+        return $this->courseRepository->searchByKeyword($keyword);
+    }
+
+    public function getCoursesGroupedByCategory()
+    {
+        $courses = $this->courseRepository->getAllWithCategory();
+        return $courses->groupBy(function ($course) {
+        return $course->category->name ?? 'Uncategorized';
+    });
+}
 
 }
 

@@ -19,15 +19,21 @@ class CourseController extends Controller
 
     public function index()
     {
-        $courseByCategory = Course::with('category')
-            ->latest()
-            ->get()
-            ->groupBy(function ($course) {
-                return $course->category->name ?? 'Uncategorized';
-            });
-
-            return view ('course.index', compact('courseByCategory'));
+        $coursesByCategory = $this->courseService->getCoursesGroupedByCategory();
+        return view('courses.index', compact('coursesByCategory'));
     }
+
+    // public function index()
+    // {
+    //     $courseByCategory = Course::with('category')
+    //         ->latest()
+    //         ->get()
+    //         ->groupBy(function ($course) {
+    //             return $course->category->name ?? 'Uncategorized';
+    //         });
+
+    //         return view ('course.index', compact('courseByCategory'));
+    // }
 
     public function details (Course $course)
     {
@@ -60,6 +66,8 @@ class CourseController extends Controller
         return view ('course.learnig_finished', compact('course'));
     }
 
+
+
     public function search_courses(Request $request)
     {
         $request->validate([
@@ -67,9 +75,9 @@ class CourseController extends Controller
         ]);
 
         $keyword = $request->search;
-        $courses = Course::where('name', 'like', "%$keyword%")
-            ->orWhere('about', 'like', "%$keyword%")
-            ->get();
+
+        // Delegate the search logic to the service
+        $courses = $this->courseService->searchCourses($keyword);
 
         return view('courses.search', compact('courses', 'keyword'));
     }
