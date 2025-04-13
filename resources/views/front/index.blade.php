@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="./output.css" rel="stylesheet">
+        <link href="{{ asset('output.css') }}" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <title>Obito Online Learning Platform - Learn Anytime, Anywhere</title>
         <meta name="description" content="Obito is an innovative online learning platform that empowers students and professionals with high-quality, accessible courses.">
@@ -23,15 +23,15 @@
         <nav id="nav-guest" class="flex w-full bg-white border-b border-obito-grey">
             <div class="flex w-[1280px] px-[75px] py-5 items-center justify-between mx-auto">
                 <div class="flex items-center gap-[50px]">
-                    <a href="index.html" class="flex shrink-0">
-                        <img src="assets/images/logos/logo.svg" class="flex shrink-0" alt="logo">
+                    <a href="{{ route('front.index') }}" class="flex shrink-0">
+                        <img src="{{ asset('assets/images/logos/logo.svg') }}" class="flex shrink-0" alt="logo">
                     </a>
                     <ul class="flex items-center gap-10">
                         <li class="hover:font-semibold transition-all duration-300 font-semibold">
-                            <a href="index.html">Home</a>
+                            <a href="{{ route('front.index') }}">Home</a>
                         </li>
                         <li class="hover:font-semibold transition-all duration-300">
-                            <a href="pricing.html">Pricing</a>
+                            <a href="{{ route('front.pricing') }}">Pricing</a>
                         </li>
                         <li class="hover:font-semibold transition-all duration-300">
                             <a href="#">Features</a>
@@ -43,14 +43,14 @@
                 </div>
                 <div class="flex items-center gap-5 justify-end">
                     <a href="#" class="flex shrink-0">
-                        <img src="assets/images/icons/device-message.svg" class="flex shrink-0" alt="icon">
+                        <img src="{{ asset('assets/images/icons/device-message.svg') }}" class="flex shrink-0" alt="icon">
                     </a>
                     <div class="h-[50px] flex shrink-0 bg-obito-grey w-px"></div>
                     <div class="flex items-center gap-3">
-                        <a href="signup.html" class="rounded-full border border-obito-grey py-3 px-5 gap-[10px] bg-white hover:border-obito-green transition-all duration-300">
+                        <a href="{{ route('register') }}" class="rounded-full border border-obito-grey py-3 px-5 gap-[10px] bg-white hover:border-obito-green transition-all duration-300">
                             <span class="font-semibold">Sign Up</span>
                         </a>
-                        <a href="signin.html" class="rounded-full py-3 px-5 gap-[10px] bg-obito-green hover:drop-shadow-effect transition-all duration-300">
+                        <a href="{{ route('login') }}" class="rounded-full py-3 px-5 gap-[10px] bg-obito-green hover:drop-shadow-effect transition-all duration-300">
                             <span class="font-semibold text-white">My Account</span>
                         </a>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="flex flex-col max-w-[500px] gap-[50px]">
                     <div class="flex flex-col gap-[30px]">
                         <p class="flex items-center gap-[6px] w-fit rounded-full py-2 px-[14px] bg-obito-light-green">
-                            <img src="assets/images/icons/crown-green.svg" class="flex shrink-0 w-5" alt="icon">
+                            <img src="{{ asset('assets/images/icons/crown-green.svg') }}" class="flex shrink-0 w-5" alt="icon">
                             <span class="font-bold text-sm">TRUSTED BY 500 FORTUNE ANGGA COMPANIES</span>
                         </p>
                         <div>
@@ -70,25 +70,25 @@
                             <p class="leading-7 mt-[10px] text-obito-text-secondary">Materi terbaru disusun oleh professional dan perusahaan besar agar lebih sesuai kebutuhan dan anda lorem dolorsi.</p>
                         </div>
                         <div class="flex items-center gap-[18px]">
-                            <a href="pricing.html" class="flex items-center rounded-full h-[67px] py-5 px-[30px] gap-[10px] bg-obito-green hover:drop-shadow-effect transition-all duration-300">
+                            <a href="{{ route('register') }}" class="flex items-center rounded-full h-[67px] py-5 px-[30px] gap-[10px] bg-obito-green hover:drop-shadow-effect transition-all duration-300">
                                 <span class="text-white font-semibold text-lg">Get Started</span>
                             </a>
                             <a href="#" class="flex items-center rounded-full h-[67px] border border-obito-grey py-5 px-[30px] bg-white gap-[10px] hover:border-obito-green transition-all duration-300">
-                                <img src="assets/images/icons/play-circle-fill.svg" class="size-8 flex shrink-0" alt="icon">
+                                <img src="{{ asset('assets/images/icons/play-circle-fill.svg') }}" class="size-8 flex shrink-0" alt="icon">
                                 <span class="font-semibold text-lg">How It Works</span>
                             </a>
                         </div>
                     </div>
                     <div class="flex items-center gap-[14px]">
-                        <img src="assets/images/photos/group.png" class="flex shrink-0 h-[50px]" alt="group photo">
+                        <img src="{{ asset('assets/images/photos/group.png') }}" class="flex shrink-0 h-[50px]" alt="group photo">
                         <div>
                             <div class="flex gap-1 items-center">
                                 <div class="flex">
-                                    <img src="assets/images/icons/Star 1.svg" class="flex shrink-0 w-5" alt="star">
-                                    <img src="assets/images/icons/Star 1.svg" class="flex shrink-0 w-5" alt="star">
-                                    <img src="assets/images/icons/Star 1.svg" class="flex shrink-0 w-5" alt="star">
-                                    <img src="assets/images/icons/Star 1.svg" class="flex shrink-0 w-5" alt="star">
-                                    <img src="assets/images/icons/Star 1.svg" class="flex shrink-0 w-5" alt="star">
+                                    <img src="{{ asset('assets/images/icons/Star 1.svg') }}" class="flex shrink-0 w-5" alt="star">
+                                    <img src="{{ asset('assets/images/icons/Star 1.svg') }}" class="flex shrink-0 w-5" alt="star">
+                                    <img src="{{ asset('assets/images/icons/Star 1.svg') }}" class="flex shrink-0 w-5" alt="star">
+                                    <img src="{{ asset('assets/images/icons/Star 1.svg') }}" class="flex shrink-0 w-5" alt="star">
+                                    <img src="{{ asset('assets/images/icons/Star 1.svg') }}" class="flex shrink-0 w-5" alt="star">
                                 </div>
                                 <span class="font-bold">5.0</span>
                             </div>
@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="flex shrink-0 h-[590px] w-[666px] justify-end">
-                <img src="assets/images/backgrounds/hero-image.png" alt="hero-image">
+                <img src="{{ asset('assets/images/backgrounds/hero-image.png') }}" alt="hero-image">
             </div>
         </main>
     </body>
