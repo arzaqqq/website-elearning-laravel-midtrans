@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use APP\Models\Pricing;
 use App\Models\Transaction;

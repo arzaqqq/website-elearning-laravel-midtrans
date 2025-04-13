@@ -6,8 +6,8 @@ use App\Models\Pricing;
 use Illuminate\Http\Request;
 use App\Services\PaymentService;
 use App\Services\PricingService;
-use App\Service\TransactionService;
 use Illuminate\Support\Facades\Log;
+use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
@@ -26,9 +26,9 @@ class FrontController extends Controller
         $this->pricingService = $pricingService;
     }
 
-    public function index(): string
+    public function index()
     {
-        return 'hello laravel from bwa';
+        return view('front.index');
     }
 
     public function pricing()

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use App\Service\TransactionService;
+use App\Services\TransactionService;
 
 class DashboardController extends Controller
 {
