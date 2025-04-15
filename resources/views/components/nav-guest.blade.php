@@ -9,7 +9,7 @@
                     <a href="{{ route('front.index') }}">Home</a>
                 </li>
                 <li class="hover:font-semibold transition-all duration-300">
-                    <a href="pricing.html">Pricing</a>
+                    <a href="{{ route('front.pricing') }}">Pricing</a>
                 </li>
                 <li class="hover:font-semibold transition-all duration-300">
                     <a href="#">Features</a>
