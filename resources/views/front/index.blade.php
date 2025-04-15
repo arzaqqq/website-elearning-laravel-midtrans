@@ -27,7 +27,7 @@
                     <div class="flex flex-col gap-[30px]">
                         <p class="flex items-center gap-[6px] w-fit rounded-full py-2 px-[14px] bg-obito-light-green">
                             <img src="{{ asset('assets/images/icons/crown-green.svg') }}" class="flex shrink-0 w-5" alt="icon">
-                            <span class="font-bold text-sm">TRUSTED BY 500 FORTUNE ANGGA COMPANIES</span>
+                            <span class="font-bold text-sm">TRUSTED rthrthrthrthrt BY 500 FORTUNE ANGGA COMPANIES</span>
                         </p>
                         <div>
                             <h1 class="font-extrabold text-[50px] leading-[65px]">Upgrade Skills, <br>Get Higher Salary</h1>
