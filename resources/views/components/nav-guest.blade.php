@@ -6,10 +6,10 @@
             </a>
             <ul class="flex items-center gap-10">
                 <li class="hover:font-semibold transition-all duration-300">
-                    <a href="{{ route('front.index') }}">Home</a>
+                    <a href="{{ route('front.index') }}" class="{{ request()->routeIs('front.index') ? 'font-semibold' : '' }}">Home</a>
                 </li>
                 <li class="hover:font-semibold transition-all duration-300">
-                    <a href="{{ route('front.pricing') }}">Pricing</a>
+                    <a href="{{ route('front.pricing') }}" class="{{ request()->routeIs('front.pricing') ? 'font-semibold' : '' }}">Pricing</a>
                 </li>
                 <li class="hover:font-semibold transition-all duration-300">
                     <a href="#">Features</a>
