@@ -99,42 +99,42 @@
                             <img src="{{asset('assets/images/icons/note.svg')}}" alt="icon" class="size-5 shrink-0" />
                             <p>Subscription Package</p>
                         </div>
-                        <strong class="font-semibold">Rp 1.899.000</strong>
+                        <strong class="font-semibold">{{ number_format($pricing->price, 0 , ' ', '.') }}/strong>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <img src="{{asset('assets/images/icons/note.svg')}}" alt="icon" class="size-5 shrink-0" />
                             <p>Access Duration</p>
                         </div>
-                        <strong class="font-semibold">3 Months</strong>
+                        <strong class="font-semibold">{{ $pricing->duration }}</strong>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <img src="{{asset('assets/images/icons/note.svg')}}" alt="icon" class="size-5 shrink-0" />
                             <p>Started At</p>
                         </div>
-                        <strong class="font-semibold">19 December 2024</strong>
+                        <strong class="font-semibold">{{ $started_at->format('d,M,Y') }}</strong>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <img src="{{asset('assets/images/icons/note.svg')}}" alt="icon" class="size-5 shrink-0" />
                             <p>Ended At</p>
                         </div>
-                        <strong class="font-semibold">19 March 2025</strong>
+                        <strong class="font-semibold">{{ ended_at->format->format(d.M,Y) }}</strong>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <img src="{{asset('assets/images/icons/note.svg')}}" alt="icon" class="size-5 shrink-0" />
                             <p>PPN 11%</p>
                         </div>
-                        <strong class="font-semibold">Rp 189.000</strong>
+                        <strong class="font-semibold">{{ number_format($total_tax_monts, 0,'','.') }}</strong>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <img src="{{asset('assets/images/icons/note.svg')}}" alt="icon" class="size-5 shrink-0" />
                             <p class="whitespace-nowrap">Grand Total</p>
                         </div>
-                        <strong class="font-bold text-[22px] leading-[33px] text-obito-green">Rp 28.583.481</strong>
+                        <strong class="font-bold text-[22px] leading-[33px] text-obito-green">{{ number_format($grand_total_amount, 0,'','.') }}</strong>
                     </div>
                 </div>
             </section>
