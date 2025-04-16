@@ -1,4 +1,5 @@
 @extends('front.layout.app')
+@section('title', 'Pricing - Website Elearning')
 @section('content')
        <x-nav-guest/>
         <main class="flex flex-col flex-1 justify-center">
