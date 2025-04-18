@@ -3,23 +3,23 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
-
 
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->hasRole('admin');
     }
-
 
     /**
      * The attributes that are mass assignable.
@@ -28,10 +28,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'photo',
-        'occupation',
         'email',
         'password',
+        'photo',
+        'occupation',
     ];
 
     /**
@@ -57,7 +57,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function transaction ()
+    public function transactions()
     {
         return $this->hasMany(Transaction::class, 'user_id');
     }
@@ -65,16 +65,16 @@ class User extends Authenticatable
     public function getActiveSubscription()
     {
         return $this->transactions()
-        ->where('is_paid', true)
-        ->where('ended_at', '>=', now())
-        ->first();
+            ->where('is_paid', true)
+            ->where('ended_at', '>=', now())
+            ->first(); // return details of subscription
     }
 
-    public function  hasActiveSubscription()
+    public function hasActiveSubscription()
     {
-        return $this->transaction()
-         ->where('is_paid', true)
-         ->where('ended_at', '>=', now())
-         ->exists();
+        return $this->transactions()
+            ->where('is_paid', true)
+            ->where('ended_at', '>=', now()) // Ensure the subscription is still active
+            ->exists(); // return boolean
     }
 }

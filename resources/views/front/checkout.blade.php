@@ -41,19 +41,27 @@
                 <div id="dropdown" class="absolute top-full right-0 mt-[7px] w-[170px] h-fit bg-white rounded-xl border border-obito-grey py-4 px-5 shadow-[0px_10px_30px_0px_#B8B8B840] z-10 hidden">
                     <ul class="flex flex-col gap-[14px]">
                         <li class="hover:text-obito-green transition-all duration-300">
-                            <a href="#">My Courses</a>
+                            <a href="{{ route('dashboard') }}">My Courses</a>
                         </li>
                         <li class="hover:text-obito-green transition-all duration-300">
                             <a href="#">Certificates</a>
                         </li>
                         <li class="hover:text-obito-green transition-all duration-300">
-                            <a href="my-subscriptions.html">Subscriptions</a>
+                            <a href="{{ route('dashboard.subscriptions') }}">Subscriptions</a>
                         </li>
                         <li class="hover:text-obito-green transition-all duration-300">
                             <a href="#">Settings</a>
                         </li>
                         <li class="hover:text-obito-green transition-all duration-300">
-                            <a href="index.html">Logout</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Logout') }}
+                                </x-dropdown-link>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -160,7 +168,7 @@
                     <img src="{{asset('assets/images/icons/cup-green-fill.svg')}}" alt="icon" class="size-[50px] shrink-0" />
                     <div>
                         <h3 class="font-bold text-[18px] leading-[27px]">{{ $prixing->name }}</h3>
-                        <p class="text-obito-text-secondary">{{ UPDATE }}</p>
+                        <p class="text-obito-text-secondary">{{$pricing->duration}}</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">

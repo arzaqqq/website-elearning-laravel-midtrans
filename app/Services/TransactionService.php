@@ -2,16 +2,14 @@
 
 namespace App\Services;
 
-use APP\Models\Pricing;
+use App\Models\Pricing;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\TransactionRepository;
 use App\Repositories\PricingRepositoryInterface;
 use App\Repositories\TransactionRepositoryInterface;
 
 class TransactionService
 {
-
     protected $pricingRepository;
     protected $transactionRepository;
 
@@ -22,56 +20,60 @@ class TransactionService
         $this->pricingRepository = $pricingRepository;
         $this->transactionRepository = $transactionRepository;
     }
+
+
+    // menampilkan data ke checkout page
+    // model binding
     public function prepareCheckout(Pricing $pricing)
     {
         $user = Auth::user();
         $alreadySubscribed = $pricing->isSubscribedByUser($user->id);
 
-        // Calculate amounts
-        $taxRate = 0.11;
-        $totalTaxAmount = $pricing->price * $taxRate;
-        $subTotalAmount = $pricing->price;
-        $grandTotalAmount = $subTotalAmount + $totalTaxAmount;
+        $tax = 0.11;
+        $total_tax_amount = $pricing->price * $tax;
+        $sub_total_amount = $pricing->price;
+        $grand_total_amount = $sub_total_amount + $total_tax_amount;
 
         // Calculate subscription dates
-        $startedAt = now(); // Current date in user's timezone
-        $endedAt = $startedAt->copy()->addMonths($pricing->duration);
+        $started_at = now(); // Today's date in the user's timezone
+        $ended_at = $started_at->copy()->addMonths($pricing->duration); // Add duration in months
 
-        // Store pricing ID in session
+        // Save the selected pricing ID into the session
         session()->put('pricing_id', $pricing->id);
 
-        return [
+        return compact(
             'total_tax_amount',
-            'grand_total_amount' ,
-            'sub_total_amount' ,
+            'grand_total_amount',
+            'sub_total_amount',
             'pricing',
-            'user' ,
-            'alreadySubscribed' ,
-            'started_at' ,
+            'user',
+            'alreadySubscribed',
+            'started_at',
             'ended_at'
-        ];
+        );
     }
 
     public function getRecentPricing()
     {
         $pricingId = session()->get('pricing_id');
+        // return Pricing::find($pricingId);
         return $this->pricingRepository->findById($pricingId);
     }
 
-
-    public function getUserTransaction()
+    public function getUserTransactions()
     {
         $user = Auth::user();
 
-        if (!$user) {
-            return collect();
-        }
+        // if (!$user) {
+        //     return collect(); // Return an empty collection if the user is not authenticated
+        // }
 
         return $this->transactionRepository->getUserTransactions($user->id);
 
-        // return Transaction::with('pricing')
-        // ->where('user_id', $user->id)
-        // ->ordering('created_at', 'desc')
-        // ->get();
+        // n+1 query
+        // return Transaction::with('pricing') // Assuming `Transaction` has a `pricing` relationship
+        //     ->where('user_id', $user->id)
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
     }
 }

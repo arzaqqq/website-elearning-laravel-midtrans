@@ -8,6 +8,7 @@ use App\Services\TransactionService;
 
 class DashboardController extends Controller
 {
+    //
     protected $transactionService;
 
     public function __construct(
@@ -18,8 +19,8 @@ class DashboardController extends Controller
 
     public function subscriptions()
     {
-        $transactions = $this->transactionService->getUserTransaction();
-        return view ('front.subscrioptions', compact('transactions'));
+        $transactions = $this->transactionService->getUserTransactions();
+        return view('front.subscriptions', compact('transactions'));
     }
 
     public function subscription_details(Transaction $transaction)

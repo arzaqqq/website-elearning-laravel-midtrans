@@ -11,13 +11,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middlewareAliases = [
-            // ...
+        //
+        $middleware->trustProxies(at: '*');
+        $middleware->validateCsrfTokens(except: [
+            '/booking/payment/midtrans/notification', // Exclude Midtrans notification route
+        ]);
+        $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-            'check.subscription' => \App\Http\Middleware\CheckSubscription::class
-        ];
+            'check.subscription' => \App\Http\Middleware\CheckSubscription::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

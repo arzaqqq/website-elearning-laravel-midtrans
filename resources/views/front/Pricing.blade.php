@@ -74,9 +74,15 @@
                                 </p>
                             </div>
                             <hr class="border-obito-grey">
-                            <a href="checkout.html" class="w-full h-11 rounded-full py-[10px] px-5 gap-[10px] bg-obito-green text-center hover:drop-shadow-effect transition-all duration-300">
+                            @if ($user && $package->isSubscribeByUser($user->id))
+                            <a href="#" class="w-full h-11 rounded-full py-[10px] px-5 gap-[10px] bg-obito-green text-center hover:drop-shadow-effect transition-all duration-300">
+                                <span class="font-semibold text-white">You've Subscribe</span>
+                            </a>
+                            @else
+                            <a href="{{ route('front.checkout', $package) }}" class="w-full h-11 rounded-full py-[10px] px-5 gap-[10px] bg-obito-green text-center hover:drop-shadow-effect transition-all duration-300">
                                 <span class="font-semibold text-white">Get Pro</span>
                             </a>
+                            @endif
                         </div>
                     </div>
                     @endforeach
