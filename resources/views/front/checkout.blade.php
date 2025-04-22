@@ -93,7 +93,7 @@
                         <p class="font-semibold">Cancel</p>
                     </div>
                 </a>
-                <button type="submit" class="flex text-white bg-obito-green rounded-full items-center justify-center py-[10px] hover:drop-shadow-effect transition-all duration-300">
+                <button id="pay-button" type="submit" class="flex text-white bg-obito-green rounded-full items-center justify-center py-[10px] hover:drop-shadow-effect transition-all duration-300">
                     <p class="font-semibold">Pay Now</p>
                 </button>
             </div>
@@ -142,4 +142,55 @@
 
 @push('after-scripts')
 <script src="{{ asset('js/dropdown-navbar.js') }}"></script>
+
+<script type="text/javascript"
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="midtrans.clientKey">
+</script>
+
+<script type="text/javascript">
+    var payButton = document.getElementById('pay-button');
+    payButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        fetch('{{ route('front.payment_store_midtrans') }}', {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json",
+                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+            },
+            body: JSON.stringify({
+                pricing_id: document.querySelector('input[name="pricing_id"]').value
+                // Add other form data if needed
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.snap_token) {
+                snap.pay(data.snap_token, {
+                    onSuccess: function(result) {
+                        window.location.href = "{{ route('front.checkout.success') }}";
+                    },
+                    onPending: function(result) {
+                        alert('Payment pending!');
+                        window.location.href = "{{ route('front.index') }}";
+                    },
+                    onError: function(result) {
+                        alert('Payment failed: ' + result.status_message);
+                        window.location.href = "{{ route('front.index') }}";
+                    },
+                    onClose: function() {
+                        alert('Payment popup closed');
+                        window.location.href = "{{ route('front.index') }}";
+                    }
+                });
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
 @endpush
