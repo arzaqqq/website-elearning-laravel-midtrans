@@ -18,4 +18,9 @@ class PricingService
     {
         return $this->pricingRepository->getAll();
     }
+
+    //  public function getAllPackages()
+    // {
+    //     return Pricing::all();
+    // }
 }

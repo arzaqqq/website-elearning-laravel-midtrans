@@ -10,7 +10,7 @@ class PricingRepository implements PricingRepositoryInterface
 {
     public function findById(int $id): ?Pricing
     {
-        return Pricing::find($id);
+        return Pricing::find($id); // Ini seharusnya bekerja
     }
 
     public function getAll(): Collection

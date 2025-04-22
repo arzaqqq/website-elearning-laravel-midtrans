@@ -15,15 +15,15 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $adminRole = Role::create ([
-            'name' => 'Admin',
+            'name' => 'admin',
         ]);
 
         $studentRole = Role::create ([
-            'name' => 'Student',
+            'name' => 'student',
         ]);
 
         $mentorRole = Role::create ([
-            'name' => 'Mentor',
+            'name' => 'mentor',
         ]);
 
 

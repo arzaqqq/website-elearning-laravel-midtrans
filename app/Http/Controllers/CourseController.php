@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
-use APP\Services\CourseService;
+use App\Services\CourseService;
 
 class CourseController extends Controller
 {
 
     protected $courseService;
 
-    public function __constrauct(
+    public function __construct(
         CourseService $courseService,
     ) {
         $this->courseService = $courseService;
