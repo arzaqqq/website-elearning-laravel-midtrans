@@ -27,23 +27,22 @@ class Course extends Model
         $this->attributes['slug'] = Str::slug( $value);
     }
 
-
     public function benefits():HasMany
     {
         return $this->hasMany(CourseBenefit::class);
     }
-    public function courseSection():HasMany
+    public function courseSections():HasMany
     {
-        return $this->hasMany(CourseSection::class);
+        return $this->hasMany(CourseSection::class, 'course_id');
     }
     public function courseStudent():HasMany
     {
-        return $this->hasMany(CourseStudent::class);
+        return $this->hasMany(CourseStudent::class, 'course_id');
     }
 
     public function courseMentors():HasMany
     {
-        return $this->hasMany(CourseMentor::class);
+        return $this->hasMany(CourseMentor::class, 'course_id');
     }
 
     public function category():BelongsTo
@@ -52,10 +51,17 @@ class Course extends Model
     }
 
 
+    // public function getContentCountAttribute()
+    // {
+    //     return $this->courseSections()->sum(function ($section) {
+    //         return $section->SectionContents->count();
+    //     });
+    // }
+
     public function getContentCountAttribute()
     {
-        return $this->courseSections()->sum(function ($section) {
-            return $section->SectionContents->count();
+        return $this->courseSections->sum(function ($section) {
+            return $section->sectionContents->count();
         });
     }
 }
