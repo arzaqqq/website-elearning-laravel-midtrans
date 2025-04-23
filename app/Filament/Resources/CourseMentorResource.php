@@ -63,7 +63,8 @@ class CourseMentorResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('mentor.photo'),
+                ImageColumn::make('mentor.photo')
+                ->label('photo'),
 
                 TextColumn::make('mentor.name')
                 ->sortable()

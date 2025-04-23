@@ -143,5 +143,6 @@
 
 @push('after-scripts')
     {{-- <script src="{{ asset('js/dropdown-navbar.js') }}"></script> --}}
+    <script src="{{ asset('js/dropdown-navbar.js') }}"></script>
     <script src="{{ asset('js/tabs.js') }}"></script>
 @endpush

@@ -40,7 +40,8 @@ class CourseController extends Controller
         $course->load([
             'category',
             'benefits',
-            'courseSections.sectionContents']);
+            'courseSections.sectionContents',
+            'courseMentors.mentor']);
         return view('courses.details', compact('course'));
     }
 
