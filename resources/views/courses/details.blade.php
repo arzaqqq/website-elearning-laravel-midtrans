@@ -1,7 +1,7 @@
 @extends('front.layout.app')
 @section('title', 'Detail - Obito BuildWithAngga')
 @section('content')
-    <x-navigation-auth />\
+    <x-navigation-auth />
 
     <nav id="bottom-nav" class="flex w-full bg-white border-b border-obito-grey py-[14px]">
         <ul class="flex w-full max-w-[1280px] px-[75px] mx-auto gap-3">

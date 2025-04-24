@@ -11,6 +11,7 @@ class CourseController extends Controller
 
     protected $courseService;
 
+
     public function __construct(
         CourseService $courseService,
     ) {

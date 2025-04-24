@@ -35,7 +35,7 @@ class Course extends Model
     {
         return $this->hasMany(CourseSection::class, 'course_id');
     }
-    public function courseStudent():HasMany
+    public function courseStudents():HasMany
     {
         return $this->hasMany(CourseStudent::class, 'course_id');
     }
