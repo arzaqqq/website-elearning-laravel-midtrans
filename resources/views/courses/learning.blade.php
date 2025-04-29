@@ -36,7 +36,10 @@
                             <ul class="flex flex-col gap-4">
                                @foreach ($section->sectionContents as $content )
                                 <li class="group {{ $currentSection && $section->id == $currentSection->id && $currentContent->id == $content->id ? 'active' : ''  }}">
-                                    <a href="">
+                                    <a href="{{ route('dashboard.course.learning', [
+                                        'course' => $course->slug,
+                                        'courseSection' => $section->id,
+                                        'sectionContent' =>$content->id                                    ])}}">
                                         <div class="px-4 group-[&.active]:bg-obito-black group-[&.active]:border-transparent group-[&.active]:text-white py-[10px] rounded-full border border-obito-grey group-hover:bg-obito-black transition-all duration-300">
                                             <h3 class="font-semibold text-sm leading-[21px] group-hover:text-white transition-all duration-300">{{ $content->name }}</h3>
                                         </div>
@@ -54,30 +57,8 @@
     <div class="flex-grow overflow-y-auto">
         <main class="pt-[30px] pb-[118px] pl-[50px]">
             <article>
-                <h1>Membangun Website Cepat dan Mudah dengan Laravel</h1>
-                <p>Performance atau kecepatan website adalah salah satu elemen penting dalam website development. Website yang lambat dapat membuat pengunjung frustrasi, bahkan bisa saja meninggalkan halaman sebelum mereka benar-benar menjelajahinya..</p>
-                <img src="{{ asset('assets/images/thumbnails/course-learning-1.png') }}" alt="image" />
-                <p>Penjelasan:</p>
-                <ul>
-                    <li>
-                        Dengan membuat service provider custom, Anda bisa menambahkan layanan spesifik untuk aplikasi Anda.
-                    </li>
-                    <li>
-                        Lifecycle memastikan service ini hanya di-load saat dibutuhkan.
-                    </li>
-                </ul>
-                <h4>Memahami Cara Response Dibentuk</h4>
-                <ol>
-                    <li>
-                        Penggunaan Bebas untuk Proyek Komersial Laravel dapat digunakan untuk membangun proyek berbayar, termasuk yang Anda kerjakan sebagai freelancer.
-                    </li>
-                    <li>
-                        Hak Modifikasi Anda diperbolehkan memodifikasi framework Laravel sesuai kebutuhan proyek Anda. Ini sangat berguna jika Anda ingin menyesuaikan
-                    </li>
-                </ol>
-                <p>Performance atau kecepatan website adalah salah satu elemen penting dalam web development. Website yang lambat dapat membuat pengunjung frustrasi, bahkan meninggalkan halaman sebelum mereka benar-benar menjelajahinya. Sebaliknya, website dengan loading cepat menciptakan pengalaman pengguna yang positif.</p>
-                <img src="{{ asset('assets/images/thumbnails/course-learning-2.png') }}" alt="image">
-                <p>Kecepatan website memengaruhi user experience secara langsung. Ketika pengunjung dapat dengan cepat mengakses informasi yang mereka butuhkan, mereka lebih cenderung untuk tetap berada di website Anda lebih lama. Hal ini tidak hanya meningkatkan tingkat kepuasan, tetapi juga dapat berkontribusi pada meningkatnya conversion rate</p>
+                <h1 class="mb-5">{{ $currentContent->name }}</h1>
+              {!! $currentContent->content !!}
             </article>
         </main>
         <nav class="fixed bottom-0 left-auto right-0 z-30 mx-auto w-[calc(100%-260px)] pt-5 pb-[30px] bg-[#F8FAF9]">
