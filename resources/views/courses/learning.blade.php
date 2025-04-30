@@ -57,8 +57,10 @@
     <div class="flex-grow overflow-y-auto">
         <main class="pt-[30px] pb-[118px] pl-[50px]">
             <article>
+               <div class="content-ebook">
                 <h1 class="mb-5">{{ $currentContent->name }}</h1>
-              {!! $currentContent->content !!}
+                {!! $currentContent->content !!}
+               </div>
             </article>
         </main>
         <nav class="fixed bottom-0 left-auto right-0 z-30 mx-auto w-[calc(100%-260px)] pt-5 pb-[30px] bg-[#F8FAF9]">
@@ -80,7 +82,33 @@
 </div>
 @endsection
 
+@push('after-style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <link rel="stylesheet" href="{{ asset('css/content.css') }}">
+@endpush
+
 @push('after-scripts')
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/accordion.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', {} => {
+            document.querySelectorAll('pre').forEach(pre => {
+            // Add the class 'tokyo-night' to each <pre> element
+            pre.classList.add('theme-tokyo-night-dark');
+
+            if (!pre.querySelector('code')) {
+            // Wrap content in <code>
+            const code = document.createElement('code');
+            code.className = ''; // Leave empty for autodetectio
+            code.textContent = pre.textContent.trim(); // Decode
+            pre.innerHTML = ''; // Clear existing content
+            pre.appendChild(code); // Append <code> inside <pre>
+
+            });
+            hljs.highlightAll(); // ApplyHighlights
+
+        });
+
+        </script>
 @endpush
