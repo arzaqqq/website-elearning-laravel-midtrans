@@ -28,18 +28,18 @@
 
                 @foreach ($course->courseSections as $section )
                     <div class="lesson accordion flex flex-col gap-4">
-                        <button type="button" data-expand="warming-up" class="flex items-center justify-between">
+                        <button type="button" data-expand="{{ $section->id }}" class="flex items-center justify-between">
                             <h2 class="font-semibold">{{ $section->name }}</h2>
                             <img src="{{ asset('assets/images/icons/arrow-circle-down.svg') }}" alt="icon" class="size-6 shrink-0 transition-all duration-300" />
                         </button>
-                        <div id="warming-up" class="hidden">
+                        <div id="{{ $section->id }}" class="">
                             <ul class="flex flex-col gap-4">
                                @foreach ($section->sectionContents as $content )
                                 <li class="group {{ $currentSection && $section->id == $currentSection->id && $currentContent->id == $content->id ? 'active' : ''  }}">
                                     <a href="{{ route('dashboard.course.learning', [
                                         'course' => $course->slug,
                                         'courseSection' => $section->id,
-                                        'sectionContent' =>$content->id                                    ])}}">
+                                        'sectionContent' =>$content->id ])}}">
                                         <div class="px-4 group-[&.active]:bg-obito-black group-[&.active]:border-transparent group-[&.active]:text-white py-[10px] rounded-full border border-obito-grey group-hover:bg-obito-black transition-all duration-300">
                                             <h3 class="font-semibold text-sm leading-[21px] group-hover:text-white transition-all duration-300">{{ $content->name }}</h3>
                                         </div>
@@ -68,12 +68,24 @@
                 <div class="content border border-obito-grey rounded-[20px] bg-white p-[12px] flex items-center justify-between">
                     <p class="text-obito-text-secondary">Pelajari materi dengan baik, jika bingung maka tanya mentor kelas</p>
                     <div class="buttons flex items-center gap-[12px]">
+
                         <a href="#" class="rounded-full border border-obito-grey px-5 py-[10px] hover:border-obito-green transition-all duration-300">
                             <span class="font-semibold">Ask Mentor</span>
                         </a>
-                        <a href="learning-finished.html" class="rounded-full border bg-obito-green text-white px-5 py-[10px] hover:drop-shadow-effect transition-all duration-300">
+
+                        @if (!$isFinished)
+                        <a href="{{ route('dashboard.course.learning', [
+                                        'course' => $course->slug,
+                                        'courseSection' => $nextContent->course_section_id,
+                                        'sectionContent' =>$nextContent->id ])}}" class="rounded-full border bg-obito-green text-white px-5 py-[10px] hover:drop-shadow-effect transition-all duration-300">
                             <span class="font-semibold">Next Lesson</span>
                         </a>
+                        @else
+                        <a href="{{ route('dashboard.course.learning.finished', $course->slug) }}" class="rounded-full border bg-obito-green text-white px-5 py-[10px] hover:drop-shadow-effect transition-all duration-300">
+                            <span class="font-semibold">Next Lesson</span>
+                        </a>
+                        @endif
+
                     </div>
                 </div>
             </div>
