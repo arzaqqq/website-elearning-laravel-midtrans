@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="status flex items-center gap-[14px]">
-                            @if ($transactionAD->isActive())
+                            @if ($transaction->isActive())
                             <span class="font-bold text-xs text-obito-green badge w-fit rounded-full py-[6px] px-[10px] gap-[6px] bg-obito-light-green">ACTIVE</span>
                             @else
                             <span class="font-bold text-xs text-obito-red badge w-fit rounded-full py-[6px] px-[10px] gap-[6px] bg-obito-light-red">EXPIRED</span>
@@ -84,11 +84,11 @@
                     <h2 class="font-semibold">Access Given to</h2>
                     <div class="profile flex items-center gap-[14px] rounded-[20px] border border-obito-grey p-[14px]">
                         <div class="flex justify-center items-center overflow-hidden size-[50px] rounded-full">
-                            <img src="{{ asset('assets/images/photos/sami.png') }}" alt="image" class="size-full object-cover" />
+                            <img src="{{ Storage::url($transaction->student->photo) }}" alt="image" class="size-full object-cover" />
                         </div>
                         <div class="desc flex flex-col gap-[3px]">
-                            <h3 class="font-semibold">Tamara Utami</h3>
-                            <p class="text-sm leading-[21px] text-obito-text-secondary">Programmer UI</p>
+                            <h3 class="font-semibold">{{ $transaction->student->name }}</h3>
+                            <p class="text-sm leading-[21px] text-obito-text-secondary">{{ $transaction->student->occupation }}</p>
                         </div>
                     </div>
                 </section>
