@@ -82,7 +82,7 @@ class CourseService
             'currentSection' => $currentSection,
             'currentContent' => $currentContent,
             'nextContent' => $nextContent,
-            'jsFinished' => !$nextContent,
+            'isFinished' => !$nextContent,
         ];
     }
 

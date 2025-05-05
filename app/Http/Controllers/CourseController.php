@@ -63,9 +63,9 @@ class CourseController extends Controller
         return view('courses.learning', $learningData);
     }
 
-    public function learing_finished (Course $course)
+    public function learning_finished (Course $course)
     {
-        return view ('course.learnig_finished', compact('course'));
+        return view ('courses.learning_finished', compact('course'));
     }
 
 

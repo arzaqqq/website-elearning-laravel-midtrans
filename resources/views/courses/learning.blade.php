@@ -72,7 +72,7 @@
                         <a href="#" class="rounded-full border border-obito-grey px-5 py-[10px] hover:border-obito-green transition-all duration-300">
                             <span class="font-semibold">Ask Mentor</span>
                         </a>
-
+                            
                         @if (!$isFinished)
                         <a href="{{ route('dashboard.course.learning', [
                                         'course' => $course->slug,
