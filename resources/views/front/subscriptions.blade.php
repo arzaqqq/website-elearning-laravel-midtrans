@@ -63,7 +63,7 @@
                     </div>
                     <div class="flex flex-col w-[100px] shrink-0 gap-1">
                         <div class="flex items-center gap-1">
-                            <img src="{{ asset('assets/images/icons/note.svg') }}"" class="flex w-5 shrink-0" alt="icon">
+                            <img src="{{ asset('assets/images/icons/note.svg') }}" class="flex w-5 shrink-0" alt="icon">
                             <p class="text-sm">Price</p>
                         </div>
                         <p class="font-semibold text-sm">Rp {{ number_format($transaction->sub_total_amount, 0, '', '.') }}</p>
@@ -84,7 +84,7 @@
                         <span class="font-bold text-xs text-obito-green badge w-fit rounded-full py-[6px] px-[10px] gap-[6px] bg-obito-light-red">EXPIRE</span>
                     </div>
                     @endif
-                    <a href="subscription-details.html" class="rounded-full border border-obito-grey py-[10px] px-5 gap-[10px] bg-white hover:border-obito-green transition-all duration-300">
+                    <a href="{{ route('dashboard.subscription.details',$transaction) }}" class="rounded-full border border-obito-grey py-[10px] px-5 gap-[10px] bg-white hover:border-obito-green transition-all duration-300">
                         <span class="font-semibold">Details</span>
                     </a>
                 </div>
